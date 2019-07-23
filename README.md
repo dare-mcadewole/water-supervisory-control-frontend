@@ -1,29 +1,36 @@
-# front-end
+# Water Supervisory Control (front-end)
 
 ## Project setup
-```
-yarn install
+
+```bash
+npm install
 ```
 
 ### Compiles and hot-reloads for development
-```
-yarn run serve
+
+```bash
+npm run serve
 ```
 
 ### Compiles and minifies for production
-```
-yarn run build
+
+```bash
+npm run build
 ```
 
 ### Run your tests
-```
-yarn run test
+
+```bash
+npm run test
 ```
 
 ### Lints and fixes files
-```
-yarn run lint
+
+```bash
+npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Authors/Contributors
+
+Dare McAdewole
+Contact me via [Gmail](mailto://dare.dev.adewole@gmail.com)
