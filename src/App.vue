@@ -5,7 +5,7 @@
       <h1>Water Supervisory Control</h1>
       <h6 class="version text-gray">
         <i class="mdi mdi-checkbox-blank text-gray"></i>
-        Version 1.0.0
+        Version {{ $store.getters.version }}
         <i class="mdi mdi-checkbox-blank text-gray"></i>
       </h6>
       <!-- <h6 class="text-bold">Loading the dashboard ... </h6> -->

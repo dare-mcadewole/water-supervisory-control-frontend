@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    version: '1.0.1',
     terminals: [
       { state: 1 },
       { state: 0 },
@@ -16,6 +17,9 @@ export default new Vuex.Store({
     TANK_LEVEL_ENDPOINT: '',
     TERMINAL_STATE_ENDPOINT: '',
     BILLING_ENDPOINT: 'http://localhost:5555/api/terminal/billing/'
+  },
+  getters: {
+    version: (state) => state.version
   },
   mutations: {
     CHANGE_VALVE_STATE (state, payload) {

@@ -48,7 +48,7 @@
         data () {
             return {
                 tankHeight: 0,
-                waterLevel: 68,
+                waterLevel: 0,
                 pumpState: 0,
                 level: 0
             }

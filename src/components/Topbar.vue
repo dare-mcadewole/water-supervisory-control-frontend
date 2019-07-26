@@ -4,7 +4,7 @@
       <i class="mdi mdi-water mdi-48px"></i>
       <div align="left">
         <h2 class="text-black">Water Supervisory Control</h2>
-        <h6><i class="mdi mdi-checkbox-blank"></i> Version 1.0.0</h6>
+        <h6><i class="mdi mdi-checkbox-blank"></i> Version {{ $store.getters.version }}</h6>
       </div>
     </div>
     <div class="wms-topbar-links">
