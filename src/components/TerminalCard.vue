@@ -73,7 +73,8 @@
         data () {
             return {
                 flowGap: 3,
-                onlineMetering: 0
+                onlineMetering: 0,
+                tester: 0
             }
         },
         computed: {
@@ -87,7 +88,36 @@
         watch: {
             remoteSensor (flowRate) {
                 var flowLitre = flowRate / 60
-                this.onlineMetering += flowLitre
+                this.onlineMetering += flowLitre.toFixed(2)
+            },
+            isThereLeakage (leakage) {
+                if (leakage) {
+                    this.$changeValveState({
+                        terminal: this.terminal,
+                        state: 0
+                    }).then(() => {
+                        this.$zutre.toast({
+                            content: `Terminal ${this.terminal} valve has been put off due to Leakages`,
+                            title: 'Terminal Valve State',
+                            duration: 3000,
+                            type: 'error',
+                            position: 'bottom right'
+                        })
+                    })
+                } else {
+                    this.$changeValveState({
+                        terminal: this.terminal,
+                        state: 1
+                    }).then(() => {
+                        this.$zutre.toast({
+                            content: `Terminal ${this.terminal} valve is now On`,
+                            title: 'Terminal Valve State',
+                            duration: 3000,
+                            type: 'success',
+                            position: 'bottom right'
+                        })
+                    })
+                }
             }
         }
     }

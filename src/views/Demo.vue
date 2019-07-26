@@ -59,94 +59,90 @@
 </template>
 
 <script>
-import DemoTerminalCard from '@/components/DemoTerminalCard'
-    export default {
-        name: 'wms-demo',
-        mounted () {
-            for (var i = 0; i < 4; i++) {
-                this.terminals.push({
-                    reference: 0,
-                    remote: 0
+export default {
+    name: 'wms-demo',
+    mounted () {
+        for (var i = 0; i < 4; i++) {
+            this.terminals.push({
+                reference: 0,
+                remote: 0
+            })
+        }
+    },
+    data () {
+        return {
+            tankStateUpdating: false,
+            waterLevel: 0,
+            pumpState: 1,
+            terminals: []
+        }
+    },
+    methods: {
+        updateTank () {
+            this.tankStateUpdating = true
+            Promise.all([
+                this.$http({
+                    method: 'POST',
+                    url: '/tank/level',
+                    data: {
+                        level: this.waterLevel 
+                    }
+                }),
+                this.$http({
+                    method: 'POST',
+                    url: '/tank/pump',
+                    data: {
+                        state: this.pumpState 
+                    }
                 })
-            }
+            ]).then((response) => {
+                var waterLevel = parseInt(response[0].data.level)
+                var pumpState = parseInt(response[1].data.state)
+                this.tankStateUpdating = false
+                this.$zutre.toast({
+                    content: `Water level is ${waterLevel} and Pump is ${pumpState===1 ? 'On' : 'Off'}`,
+                    title: 'Main Tank Status',
+                    duration: 3000,
+                    type: 'success',
+                    position: 'bottom right'
+                })
+            }).catch(() => this.tankStateUpdating = false)
         },
-        data () {
-            return {
-                tankStateUpdating: false,
-                waterLevel: 0,
-                pumpState: 1,
-                terminals: []
-            }
-        },
-        methods: {
-            updateTank () {
-                this.tankStateUpdating = true
-                Promise.all([
-                    this.$http({
-                        method: 'POST',
-                        url: '/tank/level',
-                        data: {
-                            level: this.waterLevel 
-                        }
-                    }),
-                    this.$http({
-                        method: 'POST',
-                        url: '/tank/pump',
-                        data: {
-                            state: this.pumpState 
-                        }
-                    })
-                ]).then((response) => {
-                    var waterLevel = parseInt(response[0].data.level)
-                    var pumpState = parseInt(response[1].data.state)
-                    this.tankStateUpdating = false
-                    this.$zutre.toast({
-                        content: `Water level is ${waterLevel} and Pump is ${pumpState===1 ? 'On' : 'Off'}`,
-                        title: 'Main Tank Status',
-                        duration: 3000,
-                        type: 'success',
-                        position: 'bottom right'
-                    })
-                }).catch((err) => this.tankStateUpdating = false)
-            },
 
-            updateTerminal (tid) {
-                var { reference, remote } = this.terminals[tid - 1]
-                this.updatingTerminal = true
-                Promise.all([
-                    this.$http({
-                        method: 'POST',
-                        url: `/terminal/${tid}`,
-                        data: {
-                            sensor: 1,
-                            value: reference
-                        }
-                    }),
-                    this.$http({
-                        method: 'POST',
-                        url: `/terminal/${tid}`,
-                        data: {
-                            sensor: 2,
-                            value: remote
-                        }
-                    })
-                ]).then(responses => {
-                    console.log('Responses -> ', responses)
-                    this.updatingTerminal = false
-                    this.$zutre.toast({
-                        content: `Terminal ${responses[0].data.terminal} sensors have been updated`,
-                        title: 'Terminal Update',
-                        duration: 3000,
-                        type: 'success',
-                        position: 'bottom right'
-                    })
-                }).catch((err) => this.updatingTerminal = false)
-            }
-        },
-        components: {
-            DemoTerminalCard
+        updateTerminal (tid) {
+            var { reference, remote } = this.terminals[tid - 1]
+            this.updatingTerminal = true
+            Promise.all([
+                this.$http({
+                    method: 'POST',
+                    url: `/terminal/${tid}`,
+                    data: {
+                        sensor: 1,
+                        value: reference
+                    }
+                }),
+                this.$http({
+                    method: 'POST',
+                    url: `/terminal/${tid}`,
+                    data: {
+                        sensor: 2,
+                        value: remote
+                    }
+                })
+            ]).then(responses => {
+                console.log('Responses -> ', responses)
+                this.updatingTerminal = false
+                this.$zutre.toast({
+                    content: `Terminal ${responses[0].data.terminal} sensors have been updated`,
+                    title: 'Terminal Update',
+                    duration: 3000,
+                    type: 'success',
+                    position: 'bottom right'
+                })
+            }).catch(() => this.updatingTerminal = false)
         }
     }
+}
 </script>
 
 <style lang="scss">

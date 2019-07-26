@@ -83,6 +83,7 @@ export default {
           billing: 0
         }
       ],
+      // Update this area
       usages: [
         { usage: 'Daily', value: 73 },
         { usage: 'Weekly', value: 245 },
@@ -94,7 +95,6 @@ export default {
 
   sockets: {
     WMS_TERMINAL_DATA (data) {
-      var terminal = this.terminals[data.terminal - 1]
       if (data.sensor === 1) {
         this.terminals[data.terminal - 1].referenceSensor = data.value
         return

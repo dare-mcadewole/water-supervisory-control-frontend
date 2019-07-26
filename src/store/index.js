@@ -5,6 +5,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    terminals: [
+      { state: 1 },
+      { state: 0 },
+      { state: 1 },
+      { state: 0 }
+    ],
     POST_TERMINAL_ENDPOINT: '',
     PUMP_STATE_ENDPOINT: '',
     TANK_LEVEL_ENDPOINT: '',
@@ -12,9 +18,10 @@ export default new Vuex.Store({
     BILLING_ENDPOINT: 'http://localhost:5555/api/terminal/billing/'
   },
   mutations: {
-
+    CHANGE_VALVE_STATE (state, payload) {
+      state.terminals[payload.terminal] = payload.state
+    }
   },
   actions: {
-
   }
 })

@@ -10,10 +10,13 @@ import 'zutre/dist/zutre.css'
 
 Vue.use(Zutre)
 
+const CLOUD_SERVER = 'https://watersupervisorycontrol.herokuapp.com';
+// const LOCAL_SERVER = 'http://localhost:5555';
+
 // Vue Socket Setup
 Vue.use(new VueSocketIO({
   debug: true,
-  connection: 'https://watersupervisorycontrol.herokuapp.com/wms?token=hEmG3Zw1frt5ZGuQ609II7KRstubkBG5',
+  connection: `${CLOUD_SERVER}/wms?token=hEmG3Zw1frt5ZGuQ609II7KRstubkBG5`,
   vuex: {
     store,
     actionPrefix: 'WMS_SOCKET_',
@@ -22,12 +25,25 @@ Vue.use(new VueSocketIO({
 }))
 
 // Axios Setup
-Vue.prototype.$http = axios.create({
-  baseURL: 'https://watersupervisorycontrol.herokuapp.com/api',
+var axiosInstance = axios.create({
+  baseURL: `${CLOUD_SERVER}/api`,
   headers: {
     'Content-Type': 'application/json'
   }
-})
+});
+Vue.prototype.$http = axiosInstance
+
+Vue.prototype.$changeValveState = ({ terminal, state }) => {
+  return new Promise((resolve, reject) => {
+    axiosInstance({
+      url: `/terminal/state/${terminal}`,
+      method: 'POST',
+      data: {
+        state
+      }
+    }).then(resolve).catch(reject)
+  })
+}
 
 Vue.config.productionTip = false
 
