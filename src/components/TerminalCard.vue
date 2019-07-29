@@ -87,8 +87,8 @@
         },
         watch: {
             remoteSensor (flowRate) {
-                var flowLitre = (flowRate / 60).toFixed(2)
-                this.onlineMetering = parseFloat(this.onlineMetering) + flowLitre
+                var flowLitre = parseFloat((flowRate / 60).toFixed(2))
+                this.onlineMetering += flowLitre
             },
             isThereLeakage (leakage) {
                 if (leakage) {
