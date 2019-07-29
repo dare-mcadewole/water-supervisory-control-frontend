@@ -73,6 +73,7 @@
             },
 
             waterLevel (val) {
+                // if (val > 100) this.waterLevel = 100
                 this.level = ((this.tankHeight * val) / 100) - 13
             }
         }

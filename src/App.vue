@@ -49,14 +49,6 @@ export default {
         content: 'Connected',
         duration: 3000
       })
-    },
-
-    WMS_TERMINALS () {
-      console.log('Hello Terminals')
-    },
-
-    WMS_TERMINAL_DATA (terminalData) {
-      console.log(terminalData)
     }
   }, 
 
