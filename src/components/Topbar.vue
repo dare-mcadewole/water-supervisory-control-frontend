@@ -17,9 +17,9 @@
       <router-link to="/billing" :class="{selected: page === '/billing'}">
         Billing
       </router-link>
-      <router-link to="/about" :class="{selected: page === '/about'}">
+      <!-- <router-link to="/about" :class="{selected: page === '/about'}">
         About
-      </router-link>
+      </router-link> -->
     </div>
   </section>
 </template>

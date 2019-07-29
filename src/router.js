@@ -30,6 +30,11 @@ export default new Router({
       path: '/billing',
       name: 'billing',
       component: () => import('./views/Billing.vue')
+    },
+    {
+      path: '/*',
+      name: '404',
+      component: () => import('./views/404.vue')
     }
   ]
 })
