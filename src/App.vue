@@ -8,8 +8,8 @@
         Version {{ $store.getters.version }}
         <i class="mdi mdi-checkbox-blank text-gray"></i>
       </h6>
-      <!-- <h6 class="text-bold">Loading the dashboard ... </h6> -->
       <loader></loader>
+      <h6 class="text-bold">Loading {{ page }} page </h6>
     </div>
 
     <div v-else>
@@ -40,16 +40,33 @@ export default {
     }
   },
 
+  computed: {
+    page () {
+      let page = this.$route.path.replace('/', '')
+      return page.length > 0 ? page : 'home'
+    }
+  },
+
   sockets: {
     connect () {
       this.$zutre.toast({
         position: 'top right',
         type: 'success',
-        title: 'Status',
+        title: 'Connection Status',
         content: 'Connected',
         duration: 3000
       })
-    }
+    },
+
+    disconnect () {
+      this.$zutre.toast({
+        position: 'top right',
+        type: 'error',
+        title: 'Connection Status',
+        content: 'Disconnected from the server',
+        duration: 3000
+      })
+    },
   }, 
 
   components: {
@@ -146,7 +163,7 @@ div:last-child {
   // height: 100vh;
   width: 100%;
   // padding: 1em 0;
-  margin-top: 6em; 
+  margin-top: 4em; 
 }
 
 .container {

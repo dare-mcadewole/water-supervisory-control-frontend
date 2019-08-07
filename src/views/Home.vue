@@ -42,6 +42,9 @@
         />
       </z-column>
     </z-columns>
+    <!-- <button class="wms-refresh" @click="refresh">
+      <i class="mdi mdi-refresh mdi-36px"></i>
+    </button> -->
   </div>
 </template>
 
@@ -85,12 +88,17 @@ export default {
       ],
       // Update this area
       usages: [
-        { usage: 'Daily', value: 73 },
-        { usage: 'Weekly', value: 245 },
-        { usage: 'Monthly', value: 578 },
-        { usage: 'Yearly', value: 1028 },
+        { usage: 'Daily', value: 0 },
+        { usage: 'Weekly', value: 0 },
+        { usage: 'Monthly', value: 0 },
+        { usage: 'Yearly', value: 0 },
       ]
     }
+  },
+
+  mounted () {
+    this.$socket.emit('WMS_CURRENT_BILLS_REQ')
+    this.$socket.emit('WMS_TERMINALS_METERING_REQ')
   },
 
   sockets: {
@@ -107,8 +115,20 @@ export default {
     },
 
     WMS_TERMINAL_BILLING (billing) {
-      this.terminals[parseInt(billing.terminal) - 1].billing = parseFloat(billing.units)
-      console.log('Billing -> ', billing, parseInt(billing.terminal))
+      var { terminal, units } = billing
+      this.terminals[parseInt(terminal) - 1].billing += parseFloat(units)
+    },
+
+    WMS_CURRENT_BILLS (bills) {
+      this.terminals.forEach((terminal, i) => {
+        this.terminals[i].billing = bills[i]
+      })
+    },
+
+    WMS_TERMINALS_METERING (meterings) {
+      meterings.forEach((metering, i) => {
+        this.terminals[i].onlineMetering = metering
+      })
     }
   },
 
@@ -119,6 +139,14 @@ export default {
       })
     }
   },
+
+  methods: {
+    refresh () {
+      this.$router.push(this.$route.path)
+      console.log(this.$router)
+    }
+  },
+
   components: {
     MainTank,
     Terminal,
@@ -135,6 +163,19 @@ export default {
   margin: auto;
   width: 90%;
   padding: 0 0 2em;
+}
+
+.wms-refresh {
+  position: absolute;
+  right: 1.3em;
+  bottom: 1.3em;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5em;
+  height: 5em;
+  outline: 0;
 }
 
 @media screen and (max-width: 1359px) {

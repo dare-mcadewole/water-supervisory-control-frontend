@@ -59,8 +59,12 @@
 </template>
 
 <script>
+// import DemoTerminalCard from '@/components/DemoTerminalCard'
 export default {
     name: 'wms-demo',
+    components: {
+        // DemoTerminalCard
+    },
     mounted () {
         for (var i = 0; i < 4; i++) {
             this.terminals.push({

@@ -22,7 +22,7 @@
         <z-columns>
             <z-column>
                 <h6>Online Metering</h6>
-                <p v-text="`${onlineMetering} Litres`"></p>
+                <p v-text="`${onlineMetering.toFixed(2)} Litres`"></p>
             </z-column>
             <z-column>
                 <h6>Leakage</h6>
@@ -32,7 +32,7 @@
         <z-columns>
             <z-column>
                 <h6>Billing</h6>
-                <p v-text="`${billing} units`"></p>
+                <p v-text="`${billing.toFixed(2)} units`"></p>
             </z-column>
             <z-column>
                 <h6>Location</h6>
@@ -58,6 +58,10 @@
                 type: Number,
                 required: true
             },
+            onlineMetering: {
+                type: Number,
+                required: true
+            },
             valveState: {
                 type: Boolean,
                 required: true
@@ -68,27 +72,42 @@
             }
         },
         mounted () {
-            this.onlineMetering = this.remoteSensor
+            // this.onlineMetering = this.remoteSensor
         },
         data () {
             return {
                 flowGap: 3,
-                onlineMetering: 0,
-                tester: 0
+                // onlineMetering: 0,
+                tester: 0,
+                litresConsumed: 0
             }
         },
         computed: {
             isValveOn () {
-                return !this.isThereLeakage && this.referenceSensor > 0
+                return !this.isThereLeakage
+                && this.referenceSensor > 0
+                && this.billing !== 0
             },
             isThereLeakage () {
                 return this.referenceSensor - this.remoteSensor > this.flowGap
             }
         },
         watch: {
-            remoteSensor (flowRate) {
-                var flowLitre = parseFloat((flowRate / 60).toFixed(2))
-                this.onlineMetering += flowLitre
+            billing (bill) {
+                if (bill === 0) {
+                    this.$changeValveState({
+                        terminal: this.terminal,
+                        state: 0
+                    }).then(() => {
+                        this.$zutre.toast({
+                            content: `Terminal ${this.terminal} valve has been put off due to Insufficient funds`,
+                            title: 'Terminal Valve State',
+                            duration: 3000,
+                            type: 'error',
+                            position: 'bottom right'
+                        })
+                    })
+                }
             },
             isThereLeakage (leakage) {
                 if (leakage) {
@@ -104,7 +123,7 @@
                             position: 'bottom right'
                         })
                     })
-                } else {
+                } else if (!leakage && this.billing !== 0) {
                     this.$changeValveState({
                         terminal: this.terminal,
                         state: 1

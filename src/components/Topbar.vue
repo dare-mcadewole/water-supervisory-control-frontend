@@ -1,10 +1,11 @@
 <template>
   <section class="wms-topbar">
     <div>
-      <i class="mdi mdi-water mdi-48px"></i>
+      <!-- <i class="mdi mdi-water mdi-36px"></i> -->
+      <img src="/icon.png" width="40px" />
       <div align="left">
-        <h2 class="text-black">Water Supervisory Control</h2>
-        <h6><i class="mdi mdi-checkbox-blank"></i> Version {{ $store.getters.version }}</h6>
+        <h4 class="text-black">Water Supervisory Control</h4>
+        <!-- <h6><i class="mdi mdi-checkbox-blank"></i> Version {{ $store.getters.version }}</h6> -->
       </div>
     </div>
     <div class="wms-topbar-links">
@@ -40,13 +41,13 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 0 5em;
-  height: 5.5em;
+  height: 4em;
   position: fixed;
   left: 0;
   right: 0;
   top: 0;
   z-index: 10000;
-  box-shadow: 0 3px 1em #CCC;
+  box-shadow: 0 3px .3em #DDD;
   background-color: #fff;
   // border-bottom: 2px solid #FAFAFA;
 
@@ -58,6 +59,12 @@ export default {
     > div {
       margin-left: 1em;
     }
+  }
+
+  h4 {
+    margin: 0;
+    padding: 0;
+    color: #666;
   }
 
   h2 {

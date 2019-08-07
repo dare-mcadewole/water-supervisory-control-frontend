@@ -15,7 +15,7 @@
             </div>
             <div>
                 <h6>Units</h6>
-                <h4>{{ units }}</h4>
+                <h4>{{ units.toFixed(2) }}</h4>
             </div>
             <div>
                 <z-button @click="pay" size="lg" color="success" :loading="updatingBill">
@@ -39,14 +39,11 @@
             }
         },
         computed: {
-            naira () {
-                return '\u20a6'
-            }
+            naira: () => '\u20a6'
         },
         watch: {
             price (val) {
-                var units = (val / this.cost).toString().split('.')
-                this.units = `${units[0]}.${units[1].slice(0, 2)}`
+                this.units = val / this.cost
             }
         },
         methods: {
