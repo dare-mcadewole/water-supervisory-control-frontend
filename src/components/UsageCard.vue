@@ -1,15 +1,22 @@
 <template>
     <div class="wms-overview-card" :style="`background-color: ${colors[color]};`">
-        <div>
-            <h2 class="text-light">{{ value }}</h2>
-            <h6 class="text-light">LPM</h6>
-        </div>
-        <div>
-            <h6 class="text-light">{{ usage }} Usage</h6>
-            <z-button size="sm" color="">
-                View Report <i class="mdi mdi-file-chart"></i>
-            </z-button>
-        </div>
+        <z-columns>
+            <z-column :size="12">
+                <div>
+                    <h2 class="text-light">{{ value.toFixed(2) }}</h2>
+                    <h6 class="text-light">LPM</h6>
+                </div>
+            </z-column>
+            <z-column :size="12">
+                <div>
+                    <!-- <h6 class="text-light text-bold">TERMINAL 1</h6> -->
+                    <!-- <z-button size="sm" color="">
+                        View Report <i class="mdi mdi-file-chart"></i>
+                    </z-button> -->
+                    <h4 class="text-light">{{ usage }} Usage</h4>
+                </div>
+            </z-column>
+        </z-columns>
     </div>
 </template>
 
@@ -44,23 +51,35 @@
 <style lang="scss">
 .wms-overview-card {
     border-radius: 20px;
-    padding: 1.5em 2.5em 1.5em 3em;
+    // padding: 1.5em 2.5em 1.5em 3em;
+    padding: .7em;
     margin: .7em 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    // display: flex;
+    // align-items: center;
+    // justify-content: space-between;
     opacity: 0.9;
 
+    div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
     h2 {
-        font-size: 35px;
+        font-size: 45px;
         font-weight: 600 !important;
         margin: 0;
     }
 
     h6 {
-        font-weight: 500 !important;
+        font-weight: 600 !important;
         font-size: 13px;
         text-align: right;
+    }
+
+    h3 {
+        font-weight: 200 !important;
     }
 
     .btn {

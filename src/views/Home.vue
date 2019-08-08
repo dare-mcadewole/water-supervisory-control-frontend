@@ -3,7 +3,7 @@
     <z-columns>
       <z-column
         v-for="(usage, i) in usages"
-        :key="i" :size="3" :sizeSM="12" :sizeMD="12">
+        :key="i" :size="3" :sizeXS="12" :sizeSM="12" :sizeMD="12">
         <usage-card
           :usage="usage.usage"
           :value="usage.value"
@@ -129,6 +129,16 @@ export default {
       meterings.forEach((metering, i) => {
         this.terminals[i].onlineMetering = metering
       })
+    },
+
+    WMS_TERMINAL_USAGE (usages) {
+      var range = 20
+      var cake
+      this.usages.forEach((usage, i) => {
+        cake = (range * (i+1))
+        this.usages[i].value = this.mean(usages.slice(0, cake), cake)
+      })
+      console.log(usages)
     }
   },
 
@@ -144,6 +154,14 @@ export default {
     refresh () {
       this.$router.push(this.$route.path)
       console.log(this.$router)
+    },
+
+    mean (values, cake) {
+      var sum = 0
+      values.forEach((val) => {
+        sum += val
+      })
+      return sum/cake
     }
   },
 
