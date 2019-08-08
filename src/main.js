@@ -15,7 +15,7 @@ const CLOUD_SERVER = 'https://watersupervisorycontrol.herokuapp.com';
 
 // Vue Socket Setup
 Vue.use(new VueSocketIO({
-  debug: true,
+  debug: false,
   connection: `${CLOUD_SERVER}/wms?token=hEmG3Zw1frt5ZGuQ609II7KRstubkBG5`,
   vuex: {
     store,
