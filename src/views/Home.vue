@@ -42,9 +42,11 @@
         />
       </z-column>
     </z-columns>
-    <!-- <button class="wms-refresh" @click="refresh">
-      <i class="mdi mdi-refresh mdi-36px"></i>
-    </button> -->
+    <div class="wms-refresh">
+      <z-button @click="resetBilling" color="error" circle>
+        <i class="mdi mdi-refresh mdi-18px"></i>
+      </z-button>
+    </div>
   </div>
 </template>
 
@@ -53,36 +55,35 @@ import MainTank from '@/components/MainTank'
 import Terminal from '@/components/TerminalCard'
 export default {
   name: 'home',
+  mounted () {
+  },
   data () {
     return {
+      terminalsClone: null,
       flowGap: 3,
       terminals: [
         {
           referenceSensor: 0,
           remoteSensor: 0,
           onlineMetering: 0,
-          valveState: 1,
           billing: 0
         },
         {
           referenceSensor: 0,
           remoteSensor: 0,
           onlineMetering: 0,
-          valveState: 1,
           billing: 0
         },
         {
           referenceSensor: 0,
           remoteSensor: 0,
           onlineMetering: 0,
-          valveState: 0,
           billing: 0
         },
         {
           referenceSensor: 0,
           remoteSensor: 0,
-          onlineMetering: 1,
-          valveState: 1,
+          onlineMetering: 0,
           billing: 0
         }
       ],
@@ -107,7 +108,11 @@ export default {
         this.terminals[data.terminal - 1].referenceSensor = data.value
         return
       }
-      this.terminals[data.terminal - 1].remoteSensor = data.value
+      if (this.terminals[data.terminal - 1].billing > 0) {
+        this.terminals[data.terminal - 1].remoteSensor = data.value
+        this.terminals[data.terminal - 1].onlineMetering = data.metering
+        this.updateUsages(data.metering)
+      }
     },
 
     WMS_TERMINAL_STATE (data) {
@@ -123,22 +128,6 @@ export default {
       this.terminals.forEach((terminal, i) => {
         this.terminals[i].billing = bills[i]
       })
-    },
-
-    WMS_TERMINALS_METERING (meterings) {
-      meterings.forEach((metering, i) => {
-        this.terminals[i].onlineMetering = metering
-      })
-    },
-
-    WMS_TERMINAL_USAGE (usages) {
-      var range = 20
-      var cake
-      this.usages.forEach((usage, i) => {
-        cake = (range * (i+1))
-        this.usages[i].value = this.mean(usages.slice(0, cake), cake)
-      })
-      console.log(usages)
     }
   },
 
@@ -151,17 +140,22 @@ export default {
   },
 
   methods: {
-    refresh () {
-      this.$router.push(this.$route.path)
-      console.log(this.$router)
+
+    updateUsages (metering) {
+      var range = 20, cake
+      this.usages.forEach((usage, i) => {
+        cake = (range * (i+1))
+        this.usages[i].value = metering / cake
+      })
     },
 
-    mean (values, cake) {
-      var sum = 0
-      values.forEach((val) => {
-        sum += val
+    resetBilling () {
+      this.$socket.emit('WMS_TERMINAL_RESET')
+      this.terminals.forEach((terminal, i) => {
+        this.terminals[i].referenceSensor = 0
+        this.terminals[i].remoteSensor = 0
+        this.terminals[i].onlineMetering = 0
       })
-      return sum/cake
     }
   },
 
@@ -184,9 +178,9 @@ export default {
 }
 
 .wms-refresh {
-  position: absolute;
-  right: 1.3em;
-  bottom: 1.3em;
+  position: fixed;
+  right: 1em;
+  bottom: 1em;
   border-radius: 100%;
   display: flex;
   align-items: center;
@@ -194,6 +188,7 @@ export default {
   width: 5em;
   height: 5em;
   outline: 0;
+  transform: scale(2);
 }
 
 @media screen and (max-width: 1359px) {

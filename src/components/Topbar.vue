@@ -4,7 +4,10 @@
       <!-- <i class="mdi mdi-water mdi-36px"></i> -->
       <img src="/icon.png" width="40px" />
       <div align="left">
-        <h4 class="text-black">Water Supervisory Control</h4>
+        <h4 class="text-black">
+          Water Supervisory Control
+          <z-chip data="ML" size="sm">v{{ $store.getters.version }}</z-chip>
+        </h4>
         <!-- <h6><i class="mdi mdi-checkbox-blank"></i> Version {{ $store.getters.version }}</h6> -->
       </div>
     </div>

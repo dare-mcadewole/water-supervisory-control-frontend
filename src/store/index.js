@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    version: '2.1.0',
+    version: '2.2',
     terminals: [
       { state: 1 },
       { state: 0 },

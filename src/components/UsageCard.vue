@@ -4,7 +4,7 @@
             <z-column :size="12">
                 <div>
                     <h2 class="text-light">{{ value.toFixed(2) }}</h2>
-                    <h6 class="text-light">LPM</h6>
+                    <h6 class="text-light">Litres</h6>
                 </div>
             </z-column>
             <z-column :size="12">
@@ -73,7 +73,7 @@
     }
 
     h6 {
-        font-weight: 600 !important;
+        font-weight: 500 !important;
         font-size: 13px;
         text-align: right;
     }

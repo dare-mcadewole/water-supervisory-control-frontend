@@ -174,6 +174,10 @@ div:last-child {
 
 }
 
+.toast-list {
+  z-index: 12000 !important;
+}
+
 .wms-form {
     margin: auto;
     border-radius: 12px;

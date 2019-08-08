@@ -42,7 +42,6 @@
         },
         mounted () {
             var tank = document.querySelector('#tank')
-            console.log(tank.clientHeight)
             this.tankHeight = tank.clientHeight
         },
         data () {
@@ -73,7 +72,6 @@
             },
 
             waterLevel (val) {
-                // if (val > 100) this.waterLevel = 100
                 this.level = ((this.tankHeight * val) / 100) - 13
             }
         }
