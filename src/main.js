@@ -10,13 +10,13 @@ import 'zutre/dist/zutre.css'
 
 Vue.use(Zutre)
 
-// const CLOUD_SERVER = 'https://watersupervisorycontrol.herokuapp.com';
-const LOCAL_SERVER = 'http://localhost:5555';
+const CLOUD_SERVER = 'https://watersupervisorycontrol.herokuapp.com';
+// const LOCAL_SERVER = 'http://localhost:5555';
 
 // Vue Socket Setup
 Vue.use(new VueSocketIO({
   debug: true,
-  connection: `${LOCAL_SERVER}/wms?token=hEmG3Zw1frt5ZGuQ609II7KRstubkBG5`,
+  connection: `${CLOUD_SERVER}/wms?token=hEmG3Zw1frt5ZGuQ609II7KRstubkBG5`,
   vuex: {
     store,
     actionPrefix: 'WMS_SOCKET_',
@@ -26,7 +26,7 @@ Vue.use(new VueSocketIO({
 
 // Axios Setup
 var axiosInstance = axios.create({
-  baseURL: `${LOCAL_SERVER}/api`,
+  baseURL: `${CLOUD_SERVER}/api`,
   headers: {
     'Content-Type': 'application/json'
   }
