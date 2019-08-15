@@ -55,10 +55,9 @@ import MainTank from '@/components/MainTank'
 import Terminal from '@/components/TerminalCard'
 export default {
   name: 'home',
-  mounted () {
-  },
   data () {
     return {
+      RESET_CODE: '0644',
       terminalsClone: null,
       flowGap: 3,
       terminals: [
@@ -150,12 +149,16 @@ export default {
     },
 
     resetBilling () {
-      this.$socket.emit('WMS_TERMINAL_RESET')
-      this.terminals.forEach((terminal, i) => {
-        this.terminals[i].referenceSensor = 0
-        this.terminals[i].remoteSensor = 0
-        this.terminals[i].onlineMetering = 0
-      })
+      if (prompt('Enter Reset code below') === this.RESET_CODE) {
+        this.$socket.emit('WMS_TERMINAL_RESET')
+        this.terminals.forEach((terminal, i) => {
+          this.terminals[i].referenceSensor = 0
+          this.terminals[i].remoteSensor = 0
+          this.terminals[i].onlineMetering = 0
+        })
+      } else {
+        alert('Wrong reset code')
+      }
     }
   },
 

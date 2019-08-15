@@ -1,7 +1,7 @@
 <template>
     <div class="wms-demo-page">
         <z-columns>
-            <z-column :size="12" :sizeMD="12" :sizeSM="12">
+            <z-column :size="4" :sizeMD="12" :sizeSM="12">
                 <section class="wms-source-configuration wms-form bg-primary">
                     <h3 class="text-warning">Source Configuration</h3>
                     <div>
@@ -22,7 +22,7 @@
                     </div>
                 </section>
             </z-column>
-            <!-- <z-column :size="8" :sizeMD="12" :sizeSM="12">
+            <z-column :size="8" :sizeMD="12" :sizeSM="12">
                 <section class="wms-terminal-configuration wms-form bg-primary">
                     <h3 class="text-warning">Terminal Configuration</h3>
                     <section>
@@ -53,23 +53,24 @@
                         </z-columns>
                     </section>
                 </section>
-            </z-column> -->
+            </z-column>
         </z-columns>
     </div>
 </template>
 
 <script>
-// import DemoTerminalCard from '@/components/DemoTerminalCard'
+import DemoTerminalCard from '@/components/DemoTerminalCard'
 export default {
     name: 'wms-demo',
     components: {
-        // DemoTerminalCard
+        DemoTerminalCard
     },
     mounted () {
         for (var i = 0; i < 4; i++) {
             this.terminals.push({
                 reference: 0,
-                remote: 0
+                remote: 0,
+                metering: 0
             })
         }
     },
@@ -114,7 +115,7 @@ export default {
         },
 
         updateTerminal (tid) {
-            var { reference, remote } = this.terminals[tid - 1]
+            var { reference, remote, metering } = this.terminals[tid - 1]
             this.updatingTerminal = true
             Promise.all([
                 this.$http({
@@ -122,7 +123,8 @@ export default {
                     url: `/terminal/${tid}`,
                     data: {
                         sensor: 1,
-                        value: reference
+                        value: reference,
+                        metering
                     }
                 }),
                 this.$http({
@@ -130,7 +132,8 @@ export default {
                     url: `/terminal/${tid}`,
                     data: {
                         sensor: 2,
-                        value: remote
+                        value: remote,
+                        metering
                     }
                 })
             ]).then(responses => {
@@ -155,7 +158,7 @@ export default {
 }
 
 .wms-source-configuration {
-    width: 50%;
+    // width: 50%;
     margin: auto;
 }
 

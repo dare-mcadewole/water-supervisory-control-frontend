@@ -8,6 +8,10 @@
             <h6>Remote Sensor (in LPM)</h6>
             <z-input type="number" v-model="remote" />
         </div>
+        <div>
+            <h6>Metering (in Litres)</h6>
+            <z-input type="number" v-model="metering" />
+        </div>
         <div class="wms-demo-upload-button text-right">
             <z-button size="sm" @click="$emit('update')">
                 Update Terminal
@@ -24,7 +28,8 @@
         data () {
             return {
                 reference: 0,
-                remote: 0
+                remote: 0,
+                metering: 0
             }
         },
         watch: {
@@ -37,7 +42,8 @@
             remote (remote) {
                 this.$emit('input', {
                     reference: this.reference,
-                    remote
+                    remote,
+                    metering: this.metering
                 })
             }
         }
