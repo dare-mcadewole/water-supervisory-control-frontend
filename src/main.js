@@ -12,7 +12,7 @@ import 'zutre/dist/zutre.css'
 Vue.use(Zutre)
 
 const CLOUD_SERVER = 'https://watersupervisorycontrol.herokuapp.com';
-const CLOUD_SOCKET_SERVER = 'ws://watersupervisorycontrol.herokuapp.com';
+const CLOUD_SOCKET_SERVER = 'wss://watersupervisorycontrol.herokuapp.com';
 // const LOCAL_SERVER = 'http://192.168.1.108:5555';
 // const LOCAL_SOCKET_SERVER = 'ws://192.168.1.108:5555';
 // const SERVER = LOCAL_SERVER;
