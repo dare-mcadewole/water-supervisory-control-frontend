@@ -76,7 +76,7 @@
         },
         data () {
             return {
-                flowGap: 3,
+                flowGap: 8,
                 // onlineMetering: 0,
                 tester: 0,
                 litresConsumed: 0
@@ -89,7 +89,7 @@
                 && this.billing !== 0
             },
             isThereLeakage () {
-                return this.referenceSensor - this.remoteSensor > this.flowGap
+                return Math.abs(this.remoteSensor - this.referenceSensor) > this.flowGap
             }
         },
         watch: {
