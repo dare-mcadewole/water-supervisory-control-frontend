@@ -89,7 +89,7 @@
                 && this.billing !== 0
             },
             isThereLeakage () {
-                return Math.abs(this.remoteSensor - this.referenceSensor) > this.flowGap
+                return this.remoteSensor - this.referenceSensor <= this.flowGap
             }
         },
         watch: {
