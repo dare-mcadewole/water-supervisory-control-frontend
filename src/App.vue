@@ -31,7 +31,7 @@ export default {
   mounted () {
     setTimeout(() => {
       this.loadingPage = false
-    }, 3000)
+    }, 1500)
   },
 
   data () {
