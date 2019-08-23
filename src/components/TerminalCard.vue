@@ -90,6 +90,7 @@
             },
             isThereLeakage () {
                 return this.remoteSensor - this.referenceSensor <= this.flowGap
+                && this.remoteSensor > 0 && this.referenceSensor > 0
             }
         },
         watch: {
